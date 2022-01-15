@@ -1,0 +1,37 @@
+﻿@page
+<div class="container">
+    <div class="row">
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <input type="text"
+                           id="uic"
+                           class="form-control"
+                           placeholder="uic" />
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="text"
+                           id="assetType"
+                           class="form-control"
+                           placeholder="Assest Type" />
+                </div>
+                <button class="btn btn-primary"
+                        id="startStreaming"
+                        type="button"
+                        disabled="true">Start Streaming</button>
+            </div>
+        </form>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-6">
+            <ul id="messagesList"
+                style="list-style: none; padding: 0; margin: 0"></ul>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/pricing.js"></script>
+<link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
