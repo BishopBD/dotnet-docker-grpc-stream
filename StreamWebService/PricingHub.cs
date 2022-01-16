@@ -18,7 +18,9 @@ namespace StreamWebService
             [EnumeratorCancellation]
             CancellationToken cancellationToken)
         {
-            var url = "http://localhost:5002";
+            // var url = "http://localhost:5002";
+            var url = Environment.GetEnvironmentVariable(
+                "PRICING_STREAM_ENDPOINT");
             using var channel = GrpcChannel.ForAddress(url);
 
             yield return $"Info: Opening channel to : {url}";

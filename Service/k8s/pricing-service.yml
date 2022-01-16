@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Service
+metadata:
+  # Name of service (we use this as domain in todo-app config)
+  name: pricing-grpc-service
+spec:
+  selector:
+    # Exposes stream-web-app as service
+    app: pricing-grpc
+  ports:
+  - port: 5000
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pricing-deployment
+spec:
+  selector:
+    matchLabels:
+      app: pricing-grpc
+  template:
+    metadata:
+      labels:
+        app: pricing-grpc
+    spec:
+      containers:
+      - name: pricing-grpc
+        # Image name for stream-web-app container
+        image: bdbishopdev/grpc-pricing-server:v0.1 
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+

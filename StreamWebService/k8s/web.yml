@@ -1,0 +1,44 @@
+# This part create a load balancer pod that receives traffic from
+# internet and load-balances to our pods
+apiVersion: v1
+kind: Service
+metadata:
+  name: stream-web-app-service
+spec:
+  selector:
+    # This makes load balancer point to stream-web-app deployment
+    app: stream-web-app 
+  ports:
+    - port: 80        
+      targetPort: 80  # The port our container(in pods) listens to
+  type: LoadBalancer
+---
+# This part creates a pod that runs our docker image
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stream-web-app
+spec:
+  selector:
+    matchLabels:
+      app: stream-web-app
+  template:
+    metadata:
+      labels:
+        app: stream-web-app
+    spec:
+      containers:
+      - name: stream-web-app
+        image: bdbishopdev/stream-web-app:v0.1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 80
+        env:
+          - name: PRICING_STREAM_ENDPOINT
+            value: http://pricing-grpc-service:5000
+        imagePullPolicy: Always
+
+
